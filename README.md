@@ -1,10 +1,10 @@
-# Formula 1 2024 Season Analysis 
+# F1 2024 Season Analysis EDA Project
 
 ## Overview
-This project conducts an exploratory data analysis (EDA) of the 2024 Formula 1 season, leveraging the `fastf1` Python library to fetch, process, and analyze race data, including lap times, tire strategies, driver performances, and qualifying battles. The analysis focuses on key metrics such as race finishes, qualifying positions, lap performance trends, teammate battles, and track-specific driver strengths across all 24 Grand Prix events of the season. Additionally, the project closely examines pole lap comparisons for the top 2 drivers in each round, analyzing speed, throttle, time delta, and sector-wise performance. The project aims to uncover insights into driver consistency, race and qualifying strategies, and team performance on various circuits.
+This project conducts an exploratory data analysis (EDA) of the 2024 Formula 1 season, leveraging the `fastf1` Python library to fetch, process, and analyze race and qualifying data, including lap times, tire strategies, driver performances, and pole lap comparisons. The analysis focuses on key metrics such as race finishes, lap performance trends, teammate battles, and detailed sector-wise comparisons of pole laps for the top 2 drivers in each of the 24 Grand Prix events. The project aims to uncover insights into driver consistency, race strategies, and competitive advantages in qualifying, particularly through detailed analysis of speed, throttle, time delta, and sector performance on pole laps.
 
 ## Purpose
-The primary objective is to perform a comprehensive analysis of the 2024 F1 season to identify patterns, trends, and standout performances among drivers and teams. This includes evaluating lap performances, tire strategies, driver consistency, teammate competitions, track-specific strengths, and detailed pole lap comparisons to highlight competitive edges and strategic nuances.
+The primary objective is to perform a comprehensive analysis of the 2024 F1 season to identify patterns, trends, and standout performances among drivers and teams. This includes evaluating lap performances, tire strategies, driver consistency, teammate competitions, and detailed pole lap comparisons to highlight competitive edges and strategic nuances in qualifying sessions.
 
 ## Dependencies
 To run this project, you need the following Python libraries installed:
@@ -29,7 +29,7 @@ To run this project, you need the following Python libraries installed:
 4. Ensure you have a stable internet connection, as `fastf1` fetches data from the F1 API and caches it locally for performance (a `cache` directory is created automatically).
 
 ## Usage
-1. Open the Jupyter notebook (`F1_2024_Season_Analysis.ipynb`) in a Jupyter environment (e.g., Jupyter Notebook or JupyterLab).
+1. Open the Jupyter notebook (`F1_2024.ipynb`) in a Jupyter environment (e.g., Jupyter Notebook or JupyterLab).
 2. Run the cells sequentially to load the data, process it, and generate visualizations and insights.
 3. The notebook uses cached data to improve performance, so ensure the `cache` directory is accessible and not deleted during analysis.
 4. Modify the `round_numbers` or `track_names` as needed to focus on specific races, drivers, or tracks.
@@ -41,11 +41,9 @@ To run this project, you need the following Python libraries installed:
 
 ## Key Functions and Analyses
 - `get_driver_standings()`: Fetches and aggregates driver standings (points and positions) for each race round.
-- `get_quali_battles()`: Compares qualifying positions between teammates for each race, analyzing performance gaps and consistency within teams.
-- `get_track_specific_strengths()`: Identifies drivers’ and teams’ performance strengths on specific tracks, based on race and qualifying results.
 - Teammate battles: Compares qualifying and race finish positions for drivers within the same team (e.g., Red Bull, Ferrari, Mercedes, etc.).
 - Lap performance and tire strategies: Analyzes top 3 finishers per race for consistent lap times, pit stop patterns, and tire compound usage.
-- Pole Lap Comparison: Detailed analysis of the pole lap for the top 2 drivers in each round, comparing speed, throttle, time delta, and sector-wise performance to determine competitive advantages.
+- Pole Lap Comparison: Detailed sector-wise analysis of the pole lap for the top 2 drivers in each qualifying session, comparing speed, throttle, time delta, and performance in each minisector (21 per track) to determine competitive advantages.
 
 ## Key Findings
 ### Lap Performance and Tire Strategies (Top 3 Finishers)
@@ -55,8 +53,8 @@ To run this project, you need the following Python libraries installed:
 
 ### Pole Lap Comparison
 - **Speed and Throttle Analysis:** The top 2 drivers in each qualifying session (e.g., VER and NOR in Bahrain) show differences in speed and throttle usage, with faster drivers often maintaining higher average speeds and optimized throttle control through key sectors.
-- **Time Delta Insights:** Time deltas between pole setters and second-place qualifiers reveal critical moments where one driver gains or loses time, often in specific sectors (e.g., VER’s slight edge over SAI in Bahrain).
-- **Sector-Wise Performance:** Sector comparisons highlight which driver excels in fast, medium, or slow sectors, such as NOR outperforming LEC in Sector 1 of the Monaco GP, or VER dominating Sector 3 in high-speed tracks like Monza.
+- **Time Delta Insights:** Time deltas between pole setters and second-place qualifiers reveal critical moments where one driver gains or loses time, often in specific minisectors (e.g., VER’s slight edge over SAI in Bahrain).
+- **Sector-Wise Performance:** Sector comparisons (divided into 21 minisectors per track) highlight which driver excels in specific track sections, such as NOR outperforming LEC in certain minisectors of the Monaco GP, or VER dominating high-speed minisectors at Monza.
 
 ### Driver Consistency
 - **High Variability:** Drivers like Verstappen (VER), Hamilton (HAM), Norris (NOR), and Leclerc (LEC) show high standard deviations in performance, reflecting podium potential but also vulnerability to DNFs or poor results.
@@ -73,10 +71,6 @@ To run this project, you need the following Python libraries installed:
 - **Visa Cash App RB:** Tsunoda outperforms Ricciardo initially, while Lawson shows improvement after replacing Ricciardo mid-season.
 - **Williams:** Albon is consistently ahead of Sargeant, with Colapinto narrowing the gap after replacing Sargeant.
 - **Alpine:** Gasly outperforms Ocon consistently, with Doohan’s debut at Abu Dhabi showing a learning curve.
-
-### Track-Specific Strengths
-- **Circuit-Specific Performance:** Drivers like Verstappen excel on high-speed tracks (e.g., Monza, Silverstone), while Norris and Piastri show strength on street circuits (e.g., Monaco, Singapore).
-- **Team Advantages:** Teams like Red Bull and McLaren demonstrate track-specific strengths, with Red Bull dominating in Austria and McLaren excelling in Miami and Hungary.
 
 ## Contribution
 This project is open for contributions. If you’d like to add new analyses, improve visualizations, or fix bugs, please fork the repository, make your changes, and submit a pull request.
