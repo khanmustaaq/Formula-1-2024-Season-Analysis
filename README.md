@@ -1,4 +1,4 @@
-# F1 2024 Season Analysis EDA Project
+# Formula 1 2024 Season Analysis 
 
 ## Overview
 This project conducts an exploratory data analysis (EDA) of the 2024 Formula 1 season, leveraging the `fastf1` Python library to fetch, process, and analyze race data, including lap times, tire strategies, driver performances, and qualifying battles. The analysis focuses on key metrics such as race finishes, qualifying positions, lap performance trends, teammate battles, and track-specific driver strengths across all 24 Grand Prix events of the season. Additionally, the project closely examines pole lap comparisons for the top 2 drivers in each round, analyzing speed, throttle, time delta, and sector-wise performance. The project aims to uncover insights into driver consistency, race and qualifying strategies, and team performance on various circuits.
