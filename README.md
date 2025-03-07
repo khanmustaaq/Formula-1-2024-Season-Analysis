@@ -1,83 +1,74 @@
-# F1 2024 Season Analysis EDA Project
+# F1 2024 Season Analysis & Prediction
 
 ## Overview
-This project conducts an exploratory data analysis (EDA) of the 2024 Formula 1 season, leveraging the `fastf1` Python library to fetch, process, and analyze race and qualifying data, including lap times, tire strategies, driver performances, and pole lap comparisons. The analysis focuses on key metrics such as race finishes, lap performance trends, teammate battles, and detailed sector-wise comparisons of pole laps for the top 2 drivers in each of the 24 Grand Prix events. The project aims to uncover insights into driver consistency, race strategies, and competitive advantages in qualifying, particularly through detailed analysis of speed, throttle, time delta, and sector performance on pole laps.
+This project is an in-depth exploratory data analysis (EDA) and predictive modeling initiative focused on the 2024 Formula 1 season. The goal is to analyze various performance metrics of drivers and teams and build a predictive model using XGBoost to estimate race results based on historical data.
 
-## Purpose
-The primary objective is to perform a comprehensive analysis of the 2024 F1 season to identify patterns, trends, and standout performances among drivers and teams. This includes evaluating lap performances, tire strategies, driver consistency, teammate competitions, and detailed pole lap comparisons to highlight competitive edges and strategic nuances in qualifying sessions.
+## Features
+### Exploratory Data Analysis (EDA)
+The project covers multiple aspects of the 2024 season, including:
+- **Drivers' Points Progression** throughout the season
+- **Teams' Points Progression** throughout the season
+- **Qualifying vs. Race Performance** analysis
+- **Lap Time Trends** and **Average Relative Lap Time per Driver**
+- **Driver Consistency** and **Position Changes** per race
+- **Top Position Gainers** per race
+- **Lap Performance of Top 3 Drivers** in each race
+- **Tyre Stints Comparisons** for top drivers
+- **Teammate Comparisons** (qualifying and race performance)
+- **Average Finishing Positions** per driver and team
+- **Track-based Comparisons** to highlight track-specific strengths
+- **Pole Lap vs. 2nd Fastest Driver Lap** (speed, throttle, delta analysis)
+- **Sector-wise Comparisons** for pole lap vs. 2nd fastest lap
 
-## Dependencies
-To run this project, you need the following Python libraries installed:
-- `fastf1` (for F1 data access and processing)
-- `pandas` (for data manipulation and analysis)
-- `numpy` (for numerical computations)
-- `matplotlib` (for static plotting)
-- `seaborn` (for enhanced data visualization)
-- `plotly` (for interactive visualizations)
+### Data Processing & Feature Engineering
+Data was collected from **FastF1**, the **official F1 website**, and other sources. Several additional features were derived, including:
+- `AvgLapTime`, `FastestLapTime`, `RelativeLapTime`
+- `TireStrategy`, `PitStopEfficiency`, `PitStopStdDev`
+- `SafetyCarInfluence`, `QualifyingImpact`, `DeltaToPoleTime`
+- Weather conditions (`AirTemp`, `TrackTemp`, `Rainfall`)
+- Rolling averages for driver/team performance
+
+### Machine Learning: XGBoost Model
+The dataset was used to train an XGBoost model with hyperparameter tuning via `RandomizedSearchCV`. The pipeline includes:
+- **Feature preprocessing:** Handling categorical & numerical variables
+- **Hyperparameter tuning** for optimal model performance
+- **Evaluation metrics:** Mean Squared Error (MSE), Mean Absolute Error (MAE), R-squared score (R²)
+
+#### XGBoost Model Performance
+- **Mean Squared Error:** 1.5213
+- **Mean Absolute Error:** 0.6951
+- **R-squared Score:** 0.9579
 
 ## Installation
-1. Clone this repository or download the notebook and data files.
-2. Create a virtual environment (optional but recommended):
-   ```bash
-   python -m venv myenv
-   source myenv/bin/activate  # On Windows: myenv\Scripts\activate
+1. Clone this repository:
+   ```sh
+   git clone https://github.com/yourusername/f1-2024-analysis.git
+   cd f1-2024-analysis
    ```
-3. Install the required dependencies:
-   ```bash
-   pip install fastf1 pandas numpy matplotlib seaborn plotly
+2. Install required dependencies:
+   ```sh
+   pip install -r requirements.txt
    ```
-4. Ensure you have a stable internet connection, as `fastf1` fetches data from the F1 API and caches it locally for performance (a `cache` directory is created automatically).
+3. Run the notebook:
+   ```sh
+   jupyter notebook F1_2024.ipynb
+   ```
+
+## Dependencies
+Ensure you have Python 3.8+ installed along with the libraries listed in `requirements.txt`.
 
 ## Usage
-1. Open the Jupyter notebook (`F1_2024.ipynb`) in a Jupyter environment (e.g., Jupyter Notebook or JupyterLab).
-2. Run the cells sequentially to load the data, process it, and generate visualizations and insights.
-3. The notebook uses cached data to improve performance, so ensure the `cache` directory is accessible and not deleted during analysis.
-4. Modify the `round_numbers` or `track_names` as needed to focus on specific races, drivers, or tracks.
+- Run the notebook to explore the EDA visualizations.
+- Modify `train_and_evaluate_xgboost_model()` to experiment with different features.
+- Evaluate model performance using the test dataset.
 
-## Project Structure
-- `F1_2024_Season_Analysis.ipynb`: The main Jupyter notebook containing the code, data loading, analysis functions, and visualizations.
-- `cache/`: Directory for storing cached F1 data to speed up subsequent runs.
-- `README.md`: This file, providing project documentation and instructions.
-
-## Key Functions and Analyses
-- `get_driver_standings()`: Fetches and aggregates driver standings (points and positions) for each race round.
-- Teammate battles: Compares qualifying and race finish positions for drivers within the same team (e.g., Red Bull, Ferrari, Mercedes, etc.).
-- Lap performance and tire strategies: Analyzes top 3 finishers per race for consistent lap times, pit stop patterns, and tire compound usage.
-- Pole Lap Comparison: Detailed sector-wise analysis of the pole lap for the top 2 drivers in each qualifying session, comparing speed, throttle, time delta, and performance in each minisector (21 per track) to determine competitive advantages.
-
-## Key Findings
-### Lap Performance and Tire Strategies (Top 3 Finishers)
-- **Consistent Lap Times with Pit Stops:** Across most races (e.g., Bahrain, Las Vegas, Abu Dhabi), top drivers maintain consistent lap times (e.g., 90–110 seconds) with spikes during pit stops, typically indicating two-stop strategies.
-- **Tire Strategy Trends:** Medium tires (yellow) are predominantly used for longer stints (10–30 laps), while Hard (white) or Soft (red) tires are used for shorter stints, reflecting a balance of pace and durability.
-- **Close Competition Post-Pits:** Top drivers (e.g., VER, NOR, LEC) show tight competition after pit stops, suggesting effective tire management and strategic execution.
-
-### Pole Lap Comparison
-- **Speed and Throttle Analysis:** The top 2 drivers in each qualifying session (e.g., VER and NOR in Bahrain) show differences in speed and throttle usage, with faster drivers often maintaining higher average speeds and optimized throttle control through key sectors.
-- **Time Delta Insights:** Time deltas between pole setters and second-place qualifiers reveal critical moments where one driver gains or loses time, often in specific minisectors (e.g., VER’s slight edge over SAI in Bahrain).
-- **Sector-Wise Performance:** Sector comparisons (divided into 21 minisectors per track) highlight which driver excels in specific track sections, such as NOR outperforming LEC in certain minisectors of the Monaco GP, or VER dominating high-speed minisectors at Monza.
-
-### Driver Consistency
-- **High Variability:** Drivers like Verstappen (VER), Hamilton (HAM), Norris (NOR), and Leclerc (LEC) show high standard deviations in performance, reflecting podium potential but also vulnerability to DNFs or poor results.
-- **Low Variability:** Drivers like Bottas (BOT), Sargeant (SAR), and Zhou (ZHO) exhibit lower variability, often finishing consistently low or out of points.
-
-### Teammate Performance
-- **Red Bull Racing:** Verstappen dominates Perez consistently, with Perez showing significant inconsistency (e.g., low finishes in Australia, Qatar).
-- **Ferrari:** Leclerc and Sainz are closely matched, with Leclerc showing slight consistency, while Sainz struggles in some races (e.g., Singapore).
-- **Mercedes:** Hamilton and Russell have a close but variable battle, with Russell gaining momentum late in the season.
-- **McLaren:** Norris and Piastri are highly competitive, with Piastri improving over time, though Norris won the Abu Dhabi GP.
-- **Aston Martin:** Alonso is more consistent than Stroll, who shows variability and occasional strong mid-season performances.
-- **Kick Sauber:** Bottas and Zhou show dynamic competition with neither dominating, both displaying inconsistent finishes.
-- **Haas:** Hulkenberg is consistently stronger than Magnussen, while Bearman’s debut races show potential but mixed results.
-- **Visa Cash App RB:** Tsunoda outperforms Ricciardo initially, while Lawson shows improvement after replacing Ricciardo mid-season.
-- **Williams:** Albon is consistently ahead of Sargeant, with Colapinto narrowing the gap after replacing Sargeant.
-- **Alpine:** Gasly outperforms Ocon consistently, with Doohan’s debut at Abu Dhabi showing a learning curve.
-
-## Contribution
-This project is open for contributions. If you’d like to add new analyses, improve visualizations, or fix bugs, please fork the repository, make your changes, and submit a pull request.
+## Future Improvements
+- Implement **deep learning models** (LSTMs) for time-series performance prediction.
+- Enhance **real-time race tracking** using live F1 APIs.
+- Improve feature engineering for **better predictive accuracy**.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details (if applicable, create a `LICENSE` file with the MIT License text).
+This project is open-source under the MIT License.
 
-## Acknowledgments
-- Thanks to the `fastf1` team for providing the tools to access and analyze Formula 1 data.
-- Appreciation to the F1 community for insights and data sources that inspired this analysis.
+---
+
